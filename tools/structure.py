@@ -1,7 +1,7 @@
 import os
 import sys
 
-EXCLUDE = {'venv', '.venv', '__pycache__', '.idea', '.git', 'tools'}
+EXCLUDE = {'venv', '.venv', '__pycache__', '.idea', '.git', 'tools', 'node_modules'}
 
 
 def tree(dir_path, prefix=""):
