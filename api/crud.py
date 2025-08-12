@@ -1,6 +1,6 @@
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import List, Optional
+from typing import Optional, Sequence
 
 from api.models import User
 from api.schemas import UserCreate, UserUpdate
@@ -16,7 +16,7 @@ async def get_user_by_username(db: AsyncSession, username: str) -> Optional[User
     return result.scalars().first()
 
 
-async def get_users(db: AsyncSession, skip: int = 0, limit: int = 100) -> List[User]:
+async def get_users(db: AsyncSession, skip: int = 0, limit: int = 100) -> Sequence[User]:
     result = await db.execute(select(User).offset(skip).limit(limit))
     return result.scalars().all()
 
@@ -24,7 +24,7 @@ async def get_users(db: AsyncSession, skip: int = 0, limit: int = 100) -> List[U
 async def create_user(db: AsyncSession, user_create: UserCreate) -> User:
     user = User(
         username=user_create.username,
-        password=user_create.password,  # тут нужно хешировать пароль в реальном приложении
+        password=user_create.password,
         email=user_create.email,
         fullname=user_create.fullname
     )
